@@ -1,8 +1,8 @@
-# SpaceLens
+# FindSpace
 
 **Find the space that fits. Right now.**
 
-SpaceLens is a campus space finder prototype for APU students. Instead of listing rooms, it answers one question: *which place best fits what I need, for the time I have?*
+FindSpace is a campus space finder prototype for APU students. Instead of listing rooms, it answers one question: *which place best fits what I need, for the time I have?*
 
 It combines time, group size, facilities, the student's own class gaps, distance and library seat estimates into one search, and explains every match.
 
@@ -19,7 +19,7 @@ It combines time, group size, facilities, the student's own class gaps, distance
 4. **Open a room**: a side panel shows the day timeline (08:00-22:00), the next free slot, the score breakdown and the "Is it really free?" buttons.
 
 ### Three special features
-1. **Class Gap Finder**: finds the next gap in the sample student timetable that is long enough for the chosen duration, then searches inside it. Most room finders only check the room's schedule; SpaceLens also checks yours.
+1. **Class Gap Finder**: finds the next gap in the sample student timetable that is long enough for the chosen duration, then searches inside it. Most room finders only check the room's schedule; FindSpace also checks yours.
 2. **Ask in One Sentence**: type a request like a message and the filters fill themselves in.
 3. **Never a Dead End**: when nothing matches, it suggests up to three later times (same day) when a suitable space is free, with one-tap "Use this time". Students can also report "Still free / Occupied" because a timetable alone cannot prove a room is empty.
 
@@ -80,20 +80,9 @@ You will see "No space matches this time". Pick one of the suggested times, or r
 
 ---
 
-## Suggested demo flow (3-5 minutes)
-1. Scroll to **The Finder** and explain the map.
-2. Click **Auto demo** and let the sentence type itself.
-3. Open the top result and show the score breakdown.
-4. Click **Find my next class gap**.
-5. Select several facilities and a large group to trigger a no-match, then use a suggested time.
-6. Click a room and use **Still free / Occupied**.
-7. Show **Campus Insights** and the **Cloud roadmap**. State clearly that data is simulated and the cloud steps are planned.
-
----
-
 ## Project structure
 ```
-spacelens/
+FindSpace/
 ├── index.html   # page structure and content
 ├── style.css    # visual design and animation
 ├── app.js       # data, search, scoring, map, parser, demo
@@ -118,7 +107,7 @@ You can also drag the folder onto vercel.com/new.
 ## Customising
 
 ### Rename the product
-Use VS Code **Find & Replace in Files** (Ctrl+Shift+H) to replace `SpaceLens` everywhere (page title, nav, footer, text, this README).
+Use VS Code **Find & Replace in Files** (Ctrl+Shift+H) to replace `FindSpace` everywhere (page title, nav, footer, text, this README).
 
 ### Add the APU logo
 Put the logo file in the folder, then in `index.html` replace the `<span class="apu">APU</span>` tag in the nav with `<img src="apu-logo.png" height="20" alt="APU">`.
