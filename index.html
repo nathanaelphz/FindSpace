@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SpaceLens · Find a space between classes</title>
+<meta name="description" content="SpaceLens helps APU students find the campus space that fits their time, group and facilities.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&family=Instrument+Serif:ital@1&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#060606;--fg:#f2f2ee;--mut:#8c8c86;--line:rgba(255,255,255,.1);--ac:#c8ff62;--vi:#7c5cff;--bad:#ff5d6c;--card:rgba(255,255,255,.04)}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.5 Inter,system-ui,sans-serif;overflow-x:hidden}
+button,input,select{font:inherit;color:inherit}button{cursor:pointer}
+.serif{font-family:'Instrument Serif',Georgia,serif;font-style:italic;font-weight:400;color:var(--ac)}
+.orbs{position:fixed;inset:0;z-index:-1;overflow:hidden}
+.orbs i{position:absolute;width:55vmax;height:55vmax;border-radius:50%;filter:blur(90px);opacity:.35;animation:drift 22s ease-in-out infinite alternate}
+.orbs i:nth-child(1){background:var(--vi);top:-20%;left:-10%}
+.orbs i:nth-child(2){background:#1f8f6b;bottom:-25%;right:-10%;animation-delay:-8s}
+.orbs i:nth-child(3){background:#9b6b1f;width:30vmax;height:30vmax;top:40%;left:45%;opacity:.18;animation-delay:-14s}
+@keyframes drift{to{transform:translate(8vw,6vh) scale(1.2)}}
+.grid{position:fixed;inset:0;z-index:-1;background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);background-size:64px 64px;mask-image:radial-gradient(ellipse at 50% 20%,#000 20%,transparent 70%);opacity:.5}
+.glow{position:fixed;width:380px;height:380px;margin:-190px 0 0 -190px;border-radius:50%;background:radial-gradient(circle,rgba(200,255,98,.12),transparent 65%);pointer-events:none;z-index:0;transition:opacity .3s}
+nav{position:fixed;top:14px;left:50%;transform:translateX(-50%);z-index:30;display:flex;align-items:center;gap:22px;padding:8px 10px 8px 18px;border:1px solid var(--line);border-radius:99px;background:rgba(10,10,10,.65);backdrop-filter:blur(14px)}
+.brand{font-weight:800;letter-spacing:-.03em;display:flex;align-items:center;gap:8px}
+.apu{font-size:11px;padding:3px 7px;border:1px solid var(--line);border-radius:6px;color:var(--mut)}
+nav a{color:var(--mut);text-decoration:none;font-size:13px}nav a:hover{color:var(--fg)}
+.btn{border:0;border-radius:99px;padding:10px 18px;font-weight:700;background:var(--ac);color:#0a0f00;transition:transform .2s,box-shadow .2s}
+.btn:hover{box-shadow:0 0 30px rgba(200,255,98,.4)}
+.ghost{background:transparent;border:1px solid var(--line);color:var(--fg)}
+section{position:relative;padding:90px 6vw;max-width:1280px;margin:0 auto}
+.hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding-top:120px}
+.eyebrow{font-size:12px;letter-spacing:.18em;color:var(--ac);font-weight:700}
+h1{font-size:clamp(44px,9vw,128px);line-height:.95;letter-spacing:-.05em;margin:18px 0;font-weight:800}
+h1 .w{display:inline-block;overflow:hidden;vertical-align:bottom}h1 .w b{display:inline-block;transform:translateY(110%);animation:up .9s cubic-bezier(.2,.8,.2,1) forwards;font-weight:800}
+@keyframes up{to{transform:none}}
+.lead{max-width:560px;color:var(--mut);font-size:18px}
+.cta{display:flex;gap:12px;margin-top:28px;flex-wrap:wrap}
+.chips{display:flex;gap:10px;flex-wrap:wrap;margin-top:44px}
+.chip{border:1px solid var(--line);background:var(--card);border-radius:99px;padding:8px 14px;font-size:13px;display:flex;gap:8px;align-items:center}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--ac);box-shadow:0 0 10px var(--ac);animation:pulse 1.6s infinite}
+@keyframes pulse{50%{opacity:.3}}
+.tick{overflow:hidden;border-block:1px solid var(--line);padding:14px 0;white-space:nowrap;color:var(--mut);font-size:13px;letter-spacing:.12em}
+.tick div{display:inline-block;animation:mq 40s linear infinite}
+@keyframes mq{to{transform:translateX(-50%)}}
+h2{font-size:clamp(32px,5vw,64px);letter-spacing:-.04em;line-height:1;margin:10px 0 14px}
+.sub{color:var(--mut);max-width:620px}
+.app{display:grid;grid-template-columns:360px 1fr;gap:18px;margin-top:34px}
+.panel{border:1px solid var(--line);background:var(--card);border-radius:22px;padding:18px;backdrop-filter:blur(8px)}
+.ask{display:flex;gap:8px;border:1px solid var(--line);border-radius:14px;padding:6px;background:rgba(0,0,0,.3)}
+.ask input{flex:1;background:none;border:0;outline:0;padding:8px 10px;min-width:0}
+.lbl{font-size:11px;letter-spacing:.12em;color:var(--mut);margin:18px 0 8px;display:flex;justify-content:space-between}
+.row{display:flex;gap:6px;flex-wrap:wrap}
+.pill{border:1px solid var(--line);background:transparent;border-radius:99px;padding:6px 12px;font-size:13px;color:var(--mut)}
+.pill.on{background:var(--fg);color:#000;border-color:var(--fg)}
+input[type=range]{width:100%;accent-color:var(--ac)}
+select{background:#111;border:1px solid var(--line);border-radius:10px;padding:6px 10px}
+.right{display:grid;gap:18px}
+.map{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:14px}
+.zone h4{margin:0 0 8px;font-size:11px;letter-spacing:.12em;color:var(--mut);font-weight:500}
+.tiles{display:flex;gap:5px;flex-wrap:wrap}
+.tile{width:30px;height:30px;border-radius:8px;border:1px solid var(--line);font-size:10px;display:grid;place-items:center;color:var(--mut);background:rgba(255,255,255,.03);transition:.25s}
+.tile.free{background:rgba(255,255,255,.1);color:var(--fg)}
+.tile.hit{background:var(--ac);color:#000;font-weight:800;box-shadow:0 0 14px rgba(200,255,98,.5);transform:scale(1.1)}
+.tile.busy{background:rgba(255,93,108,.14);border-color:rgba(255,93,108,.35);color:var(--bad)}
+.legend{display:flex;gap:14px;font-size:12px;color:var(--mut);margin-top:12px}
+.legend span:before{content:'';display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:6px;background:var(--c)}
+.res{display:grid;gap:10px}
+.card{display:grid;grid-template-columns:1fr auto;gap:14px;align-items:center;border:1px solid var(--line);background:var(--card);border-radius:18px;padding:14px 16px;transition:transform .15s,border-color .2s;transform:perspective(800px) rotateX(var(--rx,0)) rotateY(var(--ry,0));animation:in .5s both}
+@keyframes in{from{opacity:0;transform:translateY(14px)}}
+.card:hover{border-color:rgba(200,255,98,.5)}
+.card.top{border-color:rgba(200,255,98,.55);background:linear-gradient(120deg,rgba(200,255,98,.08),transparent)}
+.card h3{margin:0;font-size:17px;letter-spacing:-.02em}
+.meta{color:var(--mut);font-size:13px;margin-top:3px}
+.tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.tag{font-size:12px;padding:3px 9px;border-radius:99px;background:rgba(200,255,98,.1);color:#d9ff95}
+.ring{width:58px;height:58px;border-radius:50%;background:conic-gradient(var(--ac) calc(var(--s)*1%),rgba(255,255,255,.08) 0);display:grid;place-items:center;position:relative}
+.ring:before{content:'';position:absolute;inset:5px;border-radius:50%;background:#0b0b0b}
+.ring b{position:relative;font-size:16px}
+.none{text-align:center;padding:26px;border:1px dashed var(--line);border-radius:18px}
+.alt{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:10px;padding:10px 14px;border:1px solid var(--line);border-radius:12px;text-align:left}
+.cols{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:34px}
+.cols .panel h3{margin:6px 0;font-size:20px;letter-spacing:-.03em}.cols p{color:var(--mut);margin:0}
+.big{font-size:42px;font-weight:800;letter-spacing:-.04em;color:var(--ac)}
+.heat{display:grid;grid-template-columns:50px repeat(14,1fr);gap:4px;margin-top:24px;font-size:11px;color:var(--mut)}
+.heat i{aspect-ratio:1.4;border-radius:5px;background:rgba(200,255,98,var(--a))}
+.flow{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:34px}
+.node{position:relative}.node:not(:last-child):after{content:'→';position:absolute;right:-13px;top:50%;color:var(--ac)}
+.node small{color:var(--ac);letter-spacing:.12em;font-size:11px}.node p{margin:6px 0 0;color:var(--mut);font-size:13px}
+.note{margin-top:18px;padding:14px 16px;border:1px solid rgba(255,200,98,.3);background:rgba(255,200,98,.06);border-radius:14px;color:#e8d3a2;font-size:13px}
+footer{padding:40px 6vw;border-top:1px solid var(--line);color:var(--mut);font-size:13px;display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.drawer{position:fixed;inset:0;z-index:40;display:none;background:rgba(0,0,0,.6);backdrop-filter:blur(6px)}
+.drawer.on{display:block}
+.sheet{position:absolute;right:0;top:0;bottom:0;width:min(460px,100%);background:#0c0c0c;border-left:1px solid var(--line);padding:26px;overflow:auto;animation:sl .35s cubic-bezier(.2,.8,.2,1)}
+@keyframes sl{from{transform:translateX(40px);opacity:0}}
+.bar{display:grid;grid-template-columns:repeat(28,1fr);gap:2px;margin:10px 0}
+.bar i{height:26px;border-radius:3px;background:rgba(200,255,98,.55)}.bar i.b{background:rgba(255,93,108,.6)}
+.sc{display:grid;grid-template-columns:90px 1fr 40px;gap:8px;align-items:center;font-size:13px;margin:6px 0;color:var(--mut)}
+.sc div{height:6px;border-radius:9px;background:rgba(255,255,255,.08);overflow:hidden}.sc div i{display:block;height:100%;background:var(--ac)}
+.toast{position:fixed;bottom:22px;left:50%;transform:translate(-50%,30px);opacity:0;z-index:50;background:var(--ac);color:#000;padding:10px 18px;border-radius:99px;font-weight:700;transition:.35s}
+.toast.on{transform:translate(-50%,0);opacity:1}
+.rv{opacity:0;transform:translateY(30px);transition:1s cubic-bezier(.2,.8,.2,1)}.rv.in{opacity:1;transform:none}
+@media(max-width:900px){.app,.cols,.flow{grid-template-columns:1fr}.node:after{display:none}nav a{display:none}.heat{grid-template-columns:40px repeat(14,1fr)}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.rv{opacity:1;transform:none}h1 .w b{transform:none}}
+</style>
+</head>
+<body>
+<div class="orbs"><i></i><i></i><i></i></div><div class="grid"></div><div class="glow" id="glow"></div>
+<nav><div class="brand">✦ SpaceLens <!-- Replace with: <img src="apu-logo.png" height="20" alt="APU"> --><span class="apu">APU</span></div><a href="#finder">Finder</a><a href="#insights">Insights</a><a href="#cloud">Cloud</a><button class="btn" onclick="location.hash='finder'">Try it</button></nav>
+
+<header class="hero" id="top">
+<section style="padding-top:0">
+<div class="eyebrow">APU CAMPUS · SMART SPACE DISCOVERY</div>
+<h1 id="h1">Find a space <span class="serif">between</span> classes.</h1>
+<p class="lead">Tell SpaceLens how long you have, how many people, and what you need. It finds the room that actually fits, and shows you why.</p>
+<div class="cta"><button class="btn" onclick="location.hash='finder'">Find my space →</button><button class="btn ghost" onclick="demo()">▶ Auto demo</button></div>
+<div class="chips"><div class="chip"><span class="dot"></span>Library seats free: <b id="seatsChip">0</b> · simulated</div><div class="chip"><b id="nSpaces"></b> spaces modelled</div><div class="chip">Prototype data · fictional timetables</div></div>
+</section></header>
+<div class="tick"><div id="tick"></div></div>
+
+<section id="finder">
+<div class="eyebrow rv">THE FINDER</div>
+<h2 class="rv">Which place fits <span class="serif">what I need</span>, for the time I have?</h2>
+<p class="sub rv">Type it like you’d say it, or use the controls. The map lights up with every space that fits.</p>
+<div class="app rv">
+<div class="panel">
+<form class="ask" id="askf"><input id="ask" placeholder="“90 min, quiet, 4 people, projector”"><button class="btn">Ask</button></form>
+<div class="lbl"><span>DAY</span></div><div class="row" id="days"></div>
+<div class="lbl"><span>START TIME</span><b id="tl" style="color:var(--fg)"></b></div><input type="range" id="time" min="480" max="1260" step="30">
+<div class="lbl"><span>DURATION</span></div><div class="row" id="durs"></div>
+<div class="lbl"><span>PEOPLE</span><select id="ppl"></select></div>
+<div class="lbl"><span>PLACE TYPE</span></div><div class="row" id="types"></div>
+<div class="lbl"><span>FACILITIES</span></div><div class="row" id="facs"></div>
+<div class="cta" style="margin-top:20px"><button class="btn" id="gap" style="width:100%">◷ Find my next class gap</button></div>
+<p style="font-size:12px;color:var(--mut)">Uses a sample student timetable. Search hours 08:00–22:00.</p>
+</div>
+<div class="right">
+<div class="panel"><div class="lbl" style="margin-top:0"><span>LIVE CAMPUS MAP · <b id="when" style="color:var(--fg)"></b></span></div><div class="map" id="map"></div>
+<div class="legend"><span style="--c:#c8ff62">Matches you</span><span style="--c:#555">Free, filtered out</span><span style="--c:#ff5d6c">In use</span></div></div>
+<div class="res" id="res"></div>
+</div></div>
+<p style="font-size:12px;color:var(--mut)">Prototype data: capacities, facilities, timetables and library occupancy are simulated. “Free” means no class in our sample data. It does not guarantee access.</p>
+</section>
+
+<section>
+<div class="eyebrow rv">WHY IT WINS</div>
+<h2 class="rv">More than a room list.</h2>
+<div class="cols">
+<div class="panel rv"><div class="big">4</div><h3>Explainable fit score</h3><p>Capacity, facilities, your class gap and distance. Every score shows its working.</p></div>
+<div class="panel rv"><div class="big">0</div><h3>Dead ends</h3><p>No match? SpaceLens suggests the next time a suitable space is free, in one tap.</p></div>
+<div class="panel rv"><div class="big">1</div><h3>Sentence to search</h3><p>“Quiet room for 4 at 2pm” fills every filter. Students describe the need, not the form.</p></div>
+</div></section>
+
+<section id="insights">
+<div class="eyebrow rv">CAMPUS INSIGHTS · FOR UNIVERSITY TEAMS</div>
+<h2 class="rv">See where space <span class="serif">sits idle</span>.</h2>
+<p class="sub rv">Share of modelled rooms in use by day and hour (simulated). Underused slots are where a campus can free up space.</p>
+<div class="heat rv" id="heat"></div>
+</section>
+
+<section id="cloud">
+<div class="eyebrow rv">CLOUD ROADMAP</div>
+<h2 class="rv">From prototype to <span class="serif">campus-ready</span>.</h2>
+<div class="flow rv">
+<div class="panel node"><small>TODAY</small><h3>Web app</h3><p>Front end hosted on Vercel. Search, scoring and timetable logic run in the browser.</p></div>
+<div class="panel node"><small>STEP 1</small><h3>Cloud Run + Firestore</h3><p>Shared room status, bookings and verified “still free” reports.</p></div>
+<div class="panel node"><small>STEP 2</small><h3>Timetable + counts</h3><p>Scheduled import of an approved timetable feed. Aggregate seat counts via Pub/Sub.</p></div>
+<div class="panel node"><small>STEP 3</small><h3>Gemini Enterprise agent</h3><p>Function calling over the search API replaces the keyword parser.</p></div>
+</div>
+<div class="note">Honest scope: steps 1 to 3 are planned, not connected in this prototype. Library counts are simulated. A real deployment needs APU approval and a privacy review (aggregate counts only, no cameras, no personal tracking).</div>
+</section>
+
+<footer><span>✦ SpaceLens · APU smart-campus concept · Hackathon prototype</span><span>Demo data is fictional</span></footer>
+
+<div class="drawer" id="dr"><div class="sheet" id="sheet"></div></div>
+<div class="toast" id="toast"></div>
+
+<script>
+const $=s=>document.querySelector(s),fmt=m=>String(Math.floor(m/60)).padStart(2,'0')+':'+String(m%60).padStart(2,'0');
+const DAYS=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+const R=[],add=(n,c,cap,f,z,o)=>R.push({i:R.length,n,c,cap,f,z,d:60+(R.length*53)%380,...o});
+for(let k=1;k<=4;k++)add('Auditorium '+k,'Auditorium',120,['Projector','Whiteboard','Power outlets','Video conferencing'],'Block A',{t:'aud'});
+for(let k=1;k<=8;k++)add('Tech Lab 6-0'+k,'Technology lab',30,['Power outlets','Projector'],'Tech Labs',{t:'lab'});
+for(let k=1;k<=6;k++)add('Discussion Room '+k,'Library discussion room',6,['Whiteboard','Power outlets','Video conferencing'],'Library',{t:'disc'});
+for(let k=1;k<=3;k++)add('Presentation Room '+k+' @ Cyber range','Meeting room',12,['Projector','Whiteboard','Power outlets','Video conferencing'],'Cyber range',{t:'meet'});
+add('B-04-01','Laboratory',24,['Whiteboard','Power outlets'],'Block B',{t:'lab'});
+['S-05-01 (Studio 1)','S-05-03 (Architecture Studio)','S-07-01 (Studio 3)'].forEach(n=>add(n,'Studio',20,['Whiteboard','Power outlets','Quiet study'],'Block B',{t:'studio'}));
+add('Library Open Study Area','Library · open study',60,['Quiet study','Power outlets'],'Library',{t:'lib',lib:'s'});
+add('Library Computer Zone','Library · computer area',24,['Power outlets'],'Library',{t:'lib',lib:'c'});
+const seats={s:22,c:7},TOT={s:60,c:24};
+const STU={1:[[540,660],[780,900]],2:[[510,630],[900,1020]],3:[[600,720],[840,960]],4:[[510,630],[900,960]],5:[[540,720]]};
+const FACS=['Whiteboard','Projector','Power outlets','Quiet study','Video conferencing'];
+const TYPES=[['all','All'],['lib','Library'],['disc','Discussion'],['lab','Labs'],['aud','Auditorium']];
+const dow=new Date().getDay();
+const S={day:dow>0&&dow<6?dow:1,t:660,dur:90,ppl:2,fac:new Set(),type:'all'};
+const V={};
+const cap=r=>r.lib?seats[r.lib]:r.cap;
+function busy(r,day,m){if(day==0||day==6||r.lib||m<510||m>=1020)return false;const s=Math.floor((m-510)/120);return r.t=='disc'?(r.i+day+Math.floor(m/60))%7==0:(r.i*3+day*2+s)%4==0}
+function conflict(r,day,t,d){if(t<480||t+d>1320)return true;for(let m=t;m<t+d;m+=30)if(busy(r,day,m))return true;return false}
+function stuBusy(day,t,d){return(STU[day]||[]).some(([a,b])=>t<b&&t+d>a)}
+function typeOk(r){const y=S.type;return y=='all'||(y=='lib'?(r.t=='lib'||r.t=='disc'):r.t==y)}
+function pass(r,day,t){return typeOk(r)&&cap(r)>=S.ppl&&[...S.fac].every(f=>r.f.includes(f))&&!conflict(r,day,t,S.dur)}
+function score(r,day,t){const c=Math.max(8,25-Math.round(Math.max(0,cap(r)-S.ppl)*.25)),f=S.fac.size?25:18,s=stuBusy(day,t,S.dur)?6:25,p=Math.max(5,25-Math.round(r.d/18));return{total:c+f+s+p,parts:[['Capacity',c],['Facilities',f],['Class gap',s],['Distance',p]]}}
+function nextFree(r){for(let k=0;k<7;k++){const day=(S.day+k)%7;for(let m=k?480:Math.max(480,S.t);m+S.dur<=1320;m+=30)if(!conflict(r,day,m,S.dur))return DAYS[day]+' '+fmt(m)}return null}
+function toast(m){const e=$('#toast');e.textContent=m;e.classList.add('on');clearTimeout(toast.h);toast.h=setTimeout(()=>e.classList.remove('on'),2600)}
+function chips(el,items,isOn,fn){$(el).innerHTML=items.map(([v,l])=>`<button type="button" class="pill ${isOn(v)?'on':''}" data-v="${v}">${l}</button>`).join('');$(el).onclick=e=>{const b=e.target.closest('button');if(b)fn(b.dataset.v)}}
+function sync(){
+chips('#days',[1,2,3,4,5,6,0].map(d=>[d,DAYS[d]]),v=>S.day==v,v=>{S.day=+v;sync()});
+chips('#durs',[30,60,90,120,180].map(d=>[d,d<60?d+'m':d/60+'h'+(d%60?'30':'')]).map(([v,l])=>[v,v==90?'1.5h':l]),v=>S.dur==v,v=>{S.dur=+v;sync()});
+chips('#types',TYPES,v=>S.type==v,v=>{S.type=v;sync()});
+chips('#facs',FACS.map(f=>[f,f]),v=>S.fac.has(v),v=>{S.fac.has(v)?S.fac.delete(v):S.fac.add(v);sync()});
+$('#time').value=S.t;$('#tl').textContent=fmt(S.t)+'–'+fmt(S.t+S.dur);$('#ppl').value=S.ppl;$('#when').textContent=DAYS[S.day]+' '+fmt(S.t);render()}
+function render(){
+const hits=new Set(),list=[];
+R.forEach(r=>{if(pass(r,S.day,S.t)){const sc=score(r,S.day,S.t);list.push({r,sc});hits.add(r.i)}});
+list.sort((a,b)=>b.sc.total-a.sc.total);
+const zones={};R.forEach(r=>(zones[r.z]=zones[r.z]||[]).push(r));
+$('#map').innerHTML=Object.entries(zones).map(([z,rs])=>`<div class="zone"><h4>${z.toUpperCase()}</h4><div class="tiles">${rs.map(r=>{const b=conflict(r,S.day,S.t,S.dur);return`<div class="tile ${hits.has(r.i)?'hit':b?'busy':'free'}" title="${r.n}" data-i="${r.i}" style="cursor:pointer">${r.i+1}</div>`}).join('')}</div></div>`).join('');
+$('#map').onclick=e=>{const t=e.target.closest('.tile');if(t)open(+t.dataset.i)};
+const gapOk=!stuBusy(S.day,S.t,S.dur);
+let h=list.slice(0,6).map(({r,sc},i)=>`<div class="card ${i?'':'top'}" style="animation-delay:${i*70}ms" data-i="${r.i}"><div><h3>${r.n}${i?'':' <span class="tag">BEST MATCH</span>'}</h3><div class="meta">${r.c} · ${r.lib?seats[r.lib]+' seats free (simulated)':'up to '+r.cap+' people'} · ~${r.d} m away (demo)</div><div class="tags"><span class="tag">Fits ${S.ppl}</span><span class="tag">${S.dur} min clear</span>${gapOk?'<span class="tag">Fits your class gap</span>':''}${[...S.fac].slice(0,2).map(f=>`<span class="tag">${f}</span>`).join('')}</div></div><div class="ring" style="--s:${sc.total}"><b>${sc.total}</b></div></div>`).join('');
+if(!list.length){let alts='';for(let m=S.t+30,n=0;m+S.dur<=1320&&n<3;m+=30){const b=R.filter(r=>pass(r,S.day,m)).sort((a,b)=>score(b,S.day,m).total-score(a,S.day,m).total)[0];if(b){n++;alts+=`<div class="alt"><span><b>${b.n}</b><br><small style="color:var(--mut)">${DAYS[S.day]} ${fmt(m)}–${fmt(m+S.dur)}</small></span><button class="btn" onclick="S.t=${m};sync()">Use this time</button></div>`}}h=`<div class="none"><h3 style="margin:0">No space matches this time</h3><p style="color:var(--mut)">Your group size, facilities or class clash rule everything out.</p>${alts||'<p>No later slot today. Try fewer facilities or another day.</p>'}</div>`}
+$('#res').innerHTML=h;$('#res').onclick=e=>{const c=e.target.closest('.card');if(c)open(+c.dataset.i)};
+}
+function open(i){const r=R[i],sc=score(r,S.day,S.t),v=V[r.n];
+let bar='';for(let m=480;m<1320;m+=30)bar+=`<i class="${conflict(r,S.day,m,30)?'b':''}" title="${fmt(m)}"></i>`;
+$('#sheet').innerHTML=`<button class="btn ghost" onclick="closeD()" style="float:right">✕</button><div class="eyebrow">${r.z.toUpperCase()}</div><h2 style="font-size:30px">${r.n}</h2><p class="sub">${r.c} · ${r.lib?seats[r.lib]+' of '+TOT[r.lib]+' seats free (simulated)':'up to '+r.cap+' people'}</p><div class="tags">${r.f.map(f=>`<span class="tag">${f}</span>`).join('')}</div>
+<div class="lbl">${DAYS[S.day].toUpperCase()} · 08:00 TO 22:00 <span>green = free · red = class</span></div><div class="bar">${bar}</div>
+<p class="sub">${r.lib?'Seat count only. No class timetable.':'Next free slot for '+S.dur+' min: <b style="color:var(--fg)">'+(nextFree(r)||'none in 7 days')+'</b>'}</p>
+<div class="lbl">WHY THIS SCORE · ${sc.total}/100</div>${sc.parts.map(([n,x])=>`<div class="sc"><span>${n}</span><div><i style="width:${x*4}%"></i></div><b>${x}/25</b></div>`).join('')}
+<div class="lbl">IS IT REALLY FREE? <span>local demo only</span></div><div class="row"><button class="pill" onclick="ver(${i},'free')">Still free</button><button class="pill" onclick="ver(${i},'occupied')">Occupied</button></div>
+<p class="sub" id="vs">${v?'Reported '+v.s+' · just now (this browser only)':'A timetable can’t prove a room is empty. Student reports could close that gap.'}</p>`;
+$('#dr').classList.add('on')}
+function ver(i,s){V[R[i].n]={s};$('#vs').textContent='Reported '+s+' · just now (this browser only)';toast('Thanks, report saved in this demo')}
+function closeD(){$('#dr').classList.remove('on')}
+$('#dr').onclick=e=>{if(e.target.id=='dr')closeD()};addEventListener('keydown',e=>e.key=='Escape'&&closeD());
+function gap(){for(let k=0;k<5;k++){const day=((S.day-1+k)%5)+1;for(let m=(k?480:Math.max(480,Math.ceil(S.t/30)*30));m+S.dur<=1320;m+=30)if(!stuBusy(day,m,S.dur)){S.day=day;S.t=m;sync();toast('Gap found: '+DAYS[day]+' '+fmt(m)+'–'+fmt(m+S.dur));$('#res').scrollIntoView({behavior:'smooth',block:'center'});return}}toast('No gap this long. Try a shorter duration.')}
+function ask(text){const l=text.toLowerCase();let m;
+if(m=l.match(/(\d+)\s*(?:people|pax|persons?|students|of us)|for\s+(\d+)(?!\s*(?:h|m))/))S.ppl=Math.min(100,+(m[1]||m[2]));
+if(m=l.match(/(\d+(?:\.\d+)?)[-\s]?(hours?|hrs?|hr|minutes?|mins?|min)\b/))S.dur=Math.max(30,Math.min(360,Math.round(+m[1]*(/^h/.test(m[2])?60:1)/30)*30));
+if(m=l.match(/\b(\d{1,2})(?::(\d{2}))?\s*(am|pm)\b/)){let h=+m[1]%12+(m[3]=='pm'?12:0);S.t=Math.max(480,Math.min(1260,h*60+(+m[2]||0)))}
+DAYS.forEach((d,i)=>{if(new RegExp('\\b'+['sunday','monday','tuesday','wednesday','thursday','friday','saturday'][i]).test(l))S.day=i});
+S.fac=new Set();if(/whiteboard/.test(l))S.fac.add('Whiteboard');if(/projector|present/.test(l))S.fac.add('Projector');if(/power|charg|plug/.test(l))S.fac.add('Power outlets');if(/video|zoom/.test(l))S.fac.add('Video conferencing');if(/quiet|silent/.test(l))S.fac.add('Quiet study');
+S.type=/discussion/.test(l)?'disc':/library|seat/.test(l)?'lib':/auditorium/.test(l)?'aud':/\blab/.test(l)?'lab':'all';
+sync();if(/gap|between classes/.test(l))gap();else $('#res').scrollIntoView({behavior:'smooth',block:'center'})}
+$('#askf').onsubmit=e=>{e.preventDefault();ask($('#ask').value)};
+$('#time').oninput=e=>{S.t=+e.target.value;sync()};
+$('#ppl').innerHTML=[1,2,4,6,10,20,50,100].map(n=>`<option value="${n}">${n}+ people</option>`).join('');$('#ppl').onchange=e=>{S.ppl=+e.target.value;sync()};
+$('#gap').onclick=gap;
+function demo(){location.hash='finder';const q='I have 90 minutes, need a quiet place for 4 people with a whiteboard';let i=0;$('#ask').value='';const h=setInterval(()=>{$('#ask').value=q.slice(0,++i);if(i>=q.length){clearInterval(h);setTimeout(()=>ask(q),400)}},28)}
+// heatmap, tick, counters, motion
+let hm='<span></span>'+Array.from({length:14},(_,k)=>`<span>${8+k}</span>`).join('');
+[1,2,3,4,5].forEach(d=>{hm+=`<span>${DAYS[d]}</span>`;for(let k=0;k<14;k++){const rs=R.filter(r=>!r.lib),u=rs.filter(r=>busy(r,d,(8+k)*60+10)).length/rs.length;hm+=`<i style="--a:${(.08+u*2.2).toFixed(2)}" title="${Math.round(u*100)}% in use"></i>`}});
+$('#heat').innerHTML=hm;
+$('#nSpaces').textContent=R.length;
+const tk=['NO MORE WALKING AROUND','FIND THE ROOM THAT FITS','EXPLAINABLE MATCHING','NEXT FREE SLOT, ALWAYS','AGGREGATE COUNTS ONLY · PRIVACY FIRST'].join('  ✦  ')+'  ✦  ';$('#tick').innerHTML=tk.repeat(4);
+function seatsTick(){['s','c'].forEach(k=>seats[k]=Math.max(0,Math.min(TOT[k],seats[k]+(Math.random()<.5?-1:1))));$('#seatsChip').textContent=seats.s+seats.c;}
+seatsTick();setInterval(()=>{seatsTick();if(!$('#dr').classList.contains('on'))render()},5000);
+$('#h1').innerHTML=$('#h1').innerHTML.replace(/(<span[^>]*>.*?<\/span>)|([^\s<]+)/g,(a,sp,w)=>`<span class="w"><b style="animation-delay:${(h1i=(window.h1i||0)+1)*.09}s">${sp||w}</b></span>`);
+const io=new IntersectionObserver(es=>es.forEach(e=>e.isIntersecting&&e.target.classList.add('in')),{threshold:.15});document.querySelectorAll('.rv').forEach(e=>io.observe(e));
+const gl=$('#glow');addEventListener('pointermove',e=>{gl.style.transform=`translate(${e.clientX}px,${e.clientY}px)`});
+document.addEventListener('pointermove',e=>{const c=e.target.closest&&e.target.closest('.card');if(!c)return;const b=c.getBoundingClientRect();c.style.setProperty('--ry',((e.clientX-b.left)/b.width-.5)*5+'deg');c.style.setProperty('--rx',(.5-(e.clientY-b.top)/b.height)*4+'deg')});
+sync();
+</script>
+</body>
+</html>
