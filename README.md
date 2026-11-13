@@ -1,138 +1,158 @@
-# FindSpace (SpaceLens) — Campus Study &amp; Space Finder
+# SpaceLens
 
-&gt; **Find Space That Fits. Right Now.**  
-&gt; FindSpace (SpaceLens) is an intelligent campus space-matching platform designed for university students and administrators. By bridging the gap between raw room schedules, individual student timetables, and physical room equipment, FindSpace eliminates lost time between classes and brings visibility to idle university spaces.
+**Find the space that fits. Right now.**
 
----
+SpaceLens is a campus space finder prototype for APU students. Instead of listing rooms, it answers one question: *which place best fits what I need, for the time I have?*
 
-## 1\. Project Overview &amp; Elevator Pitch
+It combines time, group size, facilities, the student's own class gaps, distance and library seat estimates into one search, and explains every match.
 
-University students frequently face a recurring friction point: discovering a quiet, appropriately sized, and equipped space to study or collaborate during gaps between scheduled classes. Existing campus portals and static room lookup tools only display master schedule availability, leaving students to walk around campus searching for open rooms, only to find them occupied, locked, or lacking essential equipment such as whiteboards or power outlets.
-
-FindSpace reimagines campus space discovery by shifting from a static room list to an **explainable decision-maker**. Rather than asking students to search room by room, FindSpace evaluates five key factors simultaneously:
-
-* Student class gap duration
-* Group size capacity
-* Required room facilities (whiteboards, projectors, power outlets, quiet zones)
-* Distance from current or next class location
-* Crowd-verified physical availability
+> **Prototype data notice:** room capacities, facilities, timetables, the sample student schedule and library occupancy are all **simulated**. Nothing is connected to APU systems, sensors, cameras or booking tools. "Free" means "no class in the sample data", not a guarantee of access.
 
 ---
 
-## 2\. Core Problem &amp; System Differentiation
+## Features
 
-### The Limitation of Traditional Campus Tools
+### Main workflow
+1. **Set your need**: day, start time, duration, number of people, place type and facilities (or just type a sentence).
+2. **See the map light up**: every modelled space appears as a tile. Matches glow green, rooms in use turn red, free-but-filtered-out rooms stay dim.
+3. **Read ranked results**: each card shows a fit score (out of 100), plain-language reasons, distance (demo) and library seat counts.
+4. **Open a room**: a side panel shows the day timeline (08:00-22:00), the next free slot, the score breakdown and the "Is it really free?" buttons.
 
-As identified in campus evaluations of APU's classroom finder, traditional tools present fundamental operational gaps when applied to dynamic student schedules:
+### Three special features
+1. **Class Gap Finder**: finds the next gap in the sample student timetable that is long enough for the chosen duration, then searches inside it. Most room finders only check the room's schedule; SpaceLens also checks yours.
+2. **Ask in One Sentence**: type a request like a message and the filters fill themselves in.
+3. **Never a Dead End**: when nothing matches, it suggests up to three later times (same day) when a suitable space is free, with one-tap "Use this time". Students can also report "Still free / Occupied" because a timetable alone cannot prove a room is empty.
 
-| Feature Dimension           | Traditional Campus Room Finder                 | FindSpace (SpaceLens) Decision Engine                             |
-| --------------------------- | ---------------------------------------------- | ----------------------------------------------------------------- |
-| **Availability Logic**      | Checks if a room has a scheduled class         | Checks room schedule **and** student's class gap schedule         |
-| **Search Input**            | Complex multi-dropdown filtering forms         | One-sentence natural language input or single-tap gap detection   |
-| **Ranking Transparency**    | Arbitrary or alphabetically ordered room lists | Transparent composite match score with "Why this score" breakdown |
-| **Handling Dead Ends**      | Displays "No results found"                    | Recommends next available time slots ("Never a Dead End")         |
-| **Real-world Verification** | Static timetable data                          | Real-time student crowd reporting ("Still free / Occupied")       |
-| **Institutional Value**     | No usage tracking                              | Campus Insights heatmap displaying aggregate idle room capacity   |
-
----
-
-## 3\. Key Feature Specifications
-
-### 1\. Class Gap Finder ("Others Check the Room. We Check You.")
-
-* **Mechanism**: Extracts free windows from the student's personal timetable schedule profile and cross-references available campus spaces matching that exact duration.
-* **Workflow**: Clicking **"Find my next class gap"** automatically populates the current date, start time, and gap duration, presenting instantly ranked spaces.
-
-### 2\. Natural Language Query Engine ("Ask in One Sentence")
-
-* **Mechanism**: Parses plain English queries (such as *"90 min, quiet, 4 people, whiteboard"*) into structured parameters covering duration, atmosphere, capacity, and facilities.
-* **Auto Demo Mode**: Built-in demonstration controller for live presentations and recorded video pitches.
-
-### 3\. Explainable Match Scoring
-
-* **Mechanism**: Each recommended space features a percentage-based score ring derived from four distinct criteria:  
-  * **Capacity Fit**: Optimal sizing for individual or group work without over-allocating large rooms.
-  * **Facility Coverage**: Presence of requested amenities (whiteboard, power sockets, quiet policy, video conferencing).
-  * **Schedule Fit**: Buffer time before the next scheduled class.
-  * **Proximity**: Walking distance relative to the student's previous or upcoming lecture hall.
-
-### 4\. Crowd-Verified Availability &amp; Alternative Recommendations ("Never a Dead End")
-
-* **Crowd Verification**: Students can tap **"Still free"** or **"Occupied"** on any room panel to update live availability state for peers.
-* **Alternative Time Routing**: When a room is booked during the requested window, FindSpace immediately computes and displays the next three available time slots.
-
-### 5\. Institutional Campus Insights Heatmap
-
-* **University Analytics**: An aggregate hour-by-day utilization heatmap highlighting underused classrooms and peak library hours, enabling administrative facilities management to optimize space allocation.
+### Extras
+- **Explainable score**: capacity, facilities, class gap and distance, each out of 25.
+- **Live library seats**: simulated seat counts that change every 5 seconds.
+- **Campus Insights**: an hour-by-day heatmap showing how many modelled rooms are in use (simulated).
+- **Cloud roadmap**: an honest, labelled plan for moving from prototype to real deployment.
+- **Auto demo button**: types a sample sentence and runs it, handy for screen recordings.
 
 ---
 
-## 4\. Technical Architecture &amp; Tech Stack
+## How to use it
 
-### Current Prototype Architecture
+### Using the controls
+| Control | What it does |
+|---|---|
+| **Day** | Choose Mon-Sun. Weekends have no sample classes. |
+| **Start time** slider | 08:00 to 21:00 in 30-minute steps. The label shows the start and end time. |
+| **Duration** | 30 min, 1h, 1.5h, 2h or 3h. |
+| **People** | Minimum group size (1, 2, 4, 6, 10, 20, 50, 100). |
+| **Place type** | All, Library, Discussion, Labs or Auditorium. |
+| **Facilities** | Whiteboard, Projector, Power outlets, Quiet study, Video conferencing. A room must have all that you select. |
+| **Find my next class gap** | Jumps to the next time that fits a gap in the sample student timetable for your chosen duration. |
 
-The prototype is deployed as a high-performance, responsive single-page web application hosted on Vercel:
+### Using the sentence box
+Type naturally, then press **Ask**. It understands:
 
-* **Frontend Core**: HTML5, CSS3 (Custom Properties &amp; Design Tokens), ES6+ Vanilla JavaScript.
-* **Design System**: Dark-mode visual hierarchy with near-black backgrounds (`#0b1927`), high-contrast typography, and amber visual accents (`#f59e0b`).
-* **State Management**: Client-side reactive state tracking search filters, 27 representative campus spaces, selected rooms, crowd reports, and simulated live seat counts.
+| You write | It sets |
+|---|---|
+| `4 people`, `for 6`, `10 pax` | People |
+| `90 min`, `2 hours`, `1.5 hr` | Duration (rounded to 30 minutes) |
+| `2pm`, `10:30 am` | Start time |
+| `monday`, `friday`, etc. (`tomorrow` is not supported) | Day |
+| `whiteboard`, `projector`, `charging`, `zoom`, `quiet` | Facilities |
+| `library`, `discussion`, `lab`, `auditorium` | Place type |
+| `gap` or `between classes` | Runs the class gap finder |
 
-### Data Model &amp; Execution Safeguards
+Examples:
+- `I have 90 minutes, need a quiet place for 4 people with a whiteboard`
+- `Discussion room for 4 people at 2pm`
+- `Projector room for 20 people on friday`
+- `Library seat with power`
+- `Find a 2 hour gap between classes`
 
-* **Operating Hours Enforcer**: Constrains queries to valid campus operating hours (08:00–22:00) to prevent unrealistic midnight suggestions.
-* **Demo Clock Controller**: Maintains a fixed or adjustable reference time ensuring reliable live demonstrations regardless of the evaluation hour.
+> The sentence box is a keyword parser, not an AI model. The roadmap replaces it with a Gemini function-calling agent.
+
+### Reading results
+- **BEST MATCH** is the highest score.
+- The **ring** is the total score out of 100.
+- **Tags** explain why a room matched ("Fits 4", "90 min clear", "Fits your class gap").
+- Click any **card** or any **map tile** to open the room panel. Press **Esc** or click outside to close.
+- In the panel, **green** timeline cells are free and **red** cells are sample classes.
+- **Still free / Occupied** saves a report in the current browser session only.
+
+### No results?
+You will see "No space matches this time". Pick one of the suggested times, or reduce facilities, group size or duration.
 
 ---
 
-## 5\. Google Cloud Innovation Roadmap
-
-FindSpace is architected to transition seamlessly from a client-side prototype to an enterprise-grade cloud service deployed on Google Cloud Platform:
-
-### Phase 1: Managed Compute &amp; Database Infrastructure
-
-* **Frontend**: Web application hosted on Vercel or Firebase Hosting.
-* **API Microservices**: Google Cloud Run hosting containerized Go or Python API endpoints (`/search`, `/room/:id/timetable`, `/occupancy`).
-* **Database Layer**: Cloud Firestore storing dynamic room catalogs, active bookings, and real-time state.
-
-### Phase 2: Real-time Ingestion &amp; IoT Pipeline
-
-* **Messaging Service**: Google Cloud Pub/Sub ingesting Wi-Fi Access Point connection density and hardware sensor payloads.
-* **Processing Layer**: Serverless Cloud Functions processing streaming metrics into Firestore real-time state.
-
-### Phase 3: Institutional Systems Integration
-
-* **Automated Timetable Ingestion**: Cloud Scheduler triggering scheduled ingestion of APU timetable CSV or iCal data directly into Firestore.
-
-### Phase 4: Conversational AI Agent
-
-* **Gemini Enterprise Agent**: Integration of Gemini Enterprise LLM with structured function calling to parse complex natural language queries and execute instant room bookings.
+## Suggested demo flow (3-5 minutes)
+1. Scroll to **The Finder** and explain the map.
+2. Click **Auto demo** and let the sentence type itself.
+3. Open the top result and show the score breakdown.
+4. Click **Find my next class gap**.
+5. Select several facilities and a large group to trigger a no-match, then use a suggested time.
+6. Click a room and use **Still free / Occupied**.
+7. Show **Campus Insights** and the **Cloud roadmap**. State clearly that data is simulated and the cloud steps are planned.
 
 ---
 
-## 6\. Deployment &amp; Local Execution Guide
-
-### Local Development Setup
-
-1. Clone or download the project files into a local folder:  
-```  
-mkdir findspace &amp;&amp; cd findspace  
+## Project structure
 ```
-2. Ensure the following core files are present in the directory root:  
-  * `index.html` — Application structure and UI components
-  * `style.css` — Design system and animations
-  * `app.js` — Search logic, score calculation, map rendering, and demo controls
-3. Serve locally using Python HTTP server or VS Code Live Server extension:  
-```  
-python3 -m http.server 8000  
+spacelens/
+├── index.html   # page structure and content
+├── style.css    # visual design and animation
+├── app.js       # data, search, scoring, map, parser, demo
+└── README.md
 ```
-4. Access the web interface at `http://localhost:8000`.
+No build step, no dependencies. Fonts load from Google Fonts.
 
-### Vercel Deployment via Git
+## Run locally
+- Double-click `index.html`, or
+- In VS Code, install **Live Server**, right-click `index.html` and choose **Open with Live Server**.
 
-1. Initialize Git repository and commit files:  
-```  
-git init  
-git add .  
-git commit -m "Initial FindSpace release"  
-git branch -M main  
-git remote add origin
+## Deploy to Vercel
+1. Push this folder to a GitHub repository.
+2. In Vercel choose **Add New > Project** and import the repo.
+3. Framework Preset: **Other**. Leave Build Command and Output Directory empty.
+4. Click **Deploy**.
+
+You can also drag the folder onto vercel.com/new.
+
+---
+
+## Customising
+
+### Rename the product
+Use VS Code **Find & Replace in Files** (Ctrl+Shift+H) to replace `SpaceLens` everywhere (page title, nav, footer, text, this README).
+
+### Add the APU logo
+Put the logo file in the folder, then in `index.html` replace the `<span class="apu">APU</span>` tag in the nav with `<img src="apu-logo.png" height="20" alt="APU">`.
+
+### Change rooms or timetables (`app.js`)
+- Rooms are created with `add(name, category, capacity, facilities, zone, options)`.
+- Class patterns come from the `busy()` function.
+- The sample student timetable is the `STU` object (minutes from midnight, e.g. `[540, 660]` = 09:00-11:00).
+- Library seat totals are in `TOT`; starting free seats are in `seats`.
+
+### Change the look (`style.css`)
+Colours are variables at the top of the file (`--ac` accent, `--vi` violet glow, `--bad` busy red).
+
+---
+
+## Scoring
+Each match gets four parts out of 25:
+- **Capacity**: how closely the room size fits your group.
+- **Facilities**: whether it has what you selected.
+- **Class gap**: whether the time fits a gap in the sample student timetable.
+- **Distance**: demo distance estimate.
+
+## Limitations (honest scope)
+- All data is simulated and resets on refresh.
+- Search hours are fixed at 08:00-22:00.
+- Room reports are stored in the browser only and are not shared.
+- The sentence parser is rule-based.
+- Distances are placeholder values.
+
+## Cloud roadmap (planned, not built)
+1. **Today:** static front end on Vercel.
+2. **Step 1:** Cloud Run API plus Firestore for shared room status, bookings and verified reports.
+3. **Step 2:** Scheduled import of an approved timetable feed; aggregate seat counts through Pub/Sub.
+4. **Step 3:** Gemini Enterprise agent using function calling over the search API.
+
+## Privacy by design (concept)
+Aggregate counts only. No cameras and no personal tracking. A real deployment would need APU approval and a privacy review.
